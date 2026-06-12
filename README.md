@@ -148,3 +148,32 @@ pytest
 - Add async provider and engine variants
 - Add telemetry hooks for observability platforms
 
+
+3. Load .env in your Python file
+At the top of your script:
+
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+api_key = os.getenv("AZURE_OPENAI_API_KEY")
+endpoint = os.getenv("AZURE_OPENAI_ENDPOINT")
+deployment = os.getenv("AZURE_OPENAI_DEPLOYMENT")
+api_version = os.getenv("AZURE_OPENAI_API_VERSION", "2024-02-15-preview")
+4. Use it with AzureOpenAIProvider
+from dotenv import load_dotenv
+import os
+
+from agent_guardrails import AzureOpenAIProvider
+
+load_dotenv()
+
+provider = AzureOpenAIProvider(
+    api_key=os.getenv("AZURE_OPENAI_API_KEY", ""),
+    endpoint=os.getenv("AZURE_OPENAI_ENDPOINT", ""),
+    deployment=os.getenv("AZURE_OPENAI_DEPLOYMENT", ""),
+    api_version=os.getenv("AZURE_OPENAI_API_VERSION", "2024-02-15-preview"),
+)
+
+print(provider.generate("Say SAFE in one word"))
